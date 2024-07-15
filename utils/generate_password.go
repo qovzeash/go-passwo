@@ -5,18 +5,28 @@ import (
 	"strings"
 )
 
-func GeneratePassword(size int) string {
+func GeneratePassword(size int, criteria string) string {
 	var generatedPassword strings.Builder
 	alphabetLower := "abcdefghijklmnopqrstuvwxyz"
 	alphabetUpper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	specialCharacters := "!@#$%^&*()_+-=[]{}|;:'\",.<>?/`~"
 	pinCode := "1234567890"
 
-	defaultCriteria := alphabetLower + alphabetUpper + specialCharacters + pinCode
+	if criteria == "defaultCriteria" {
+		criteria = alphabetLower + alphabetUpper + specialCharacters + pinCode
+	}
+
+	if criteria == "noSpecial" {
+		criteria = alphabetLower + alphabetUpper + pinCode
+	}
+
+	if criteria == "pinCode" {
+		criteria = pinCode
+	}
 
 	for i := 0; i < size; i++ {
-		randomNumber := rand.IntN(len(defaultCriteria))
-		generatedCharacter := string(defaultCriteria[randomNumber])
+		randomNumber := rand.IntN(len(criteria))
+		generatedCharacter := string(criteria[randomNumber])
 		generatedPassword.WriteString(generatedCharacter)
 	}
 
