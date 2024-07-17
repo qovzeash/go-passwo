@@ -11,13 +11,13 @@ import (
 
 var size int
 var criteria string
-var omitSymbols, pinCode bool
+var noSpecial, pinCode, toClipboard bool
 
 var rootCmd = &cobra.Command{
 	Use:   "",
 	Short: "quick, secure, and reliable password generator.",
 	Run: func(cmd *cobra.Command, args []string) {
-		if omitSymbols {
+		if noSpecial {
 			criteria = "noSpecial"
 		} else if pinCode {
 			criteria = "pinCode"
@@ -27,20 +27,24 @@ var rootCmd = &cobra.Command{
 
 		generatePassword := (utils.GeneratePassword(size, criteria))
 
-		err := clipboard.WriteAll(generatePassword)
-		if err != nil {
-			fmt.Println("failed to copy to clipboard:", err)
-
-		} else {
-			fmt.Println("password copied to clipboard!")
+		if toClipboard {
+			err := clipboard.WriteAll(generatePassword)
+			if err != nil {
+				fmt.Println("failed to copy to clipboard:", err)
+			} else {
+				fmt.Println("password copied to clipboard!")
+			}
 		}
+
+		fmt.Println(generatePassword)
 	},
 }
 
 func init() {
 	rootCmd.Flags().IntVar(&size, "size", 12, "specify the lenght of the password to be generated.")
-	rootCmd.Flags().BoolVar(&omitSymbols, "omit-symbols", false, "generate a password without including any special characters.")
+	rootCmd.Flags().BoolVar(&noSpecial, "no-special", false, "generate a password without including any special characters.")
 	rootCmd.Flags().BoolVar(&pinCode, "pin-code", false, "generate a numeric pin code instead of a full password.")
+	rootCmd.Flags().BoolVar(&toClipboard, "to-clipboard", false, "copy the password to the clipboard.")
 }
 
 func Execute() {

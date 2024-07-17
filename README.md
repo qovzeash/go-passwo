@@ -25,23 +25,25 @@ Once installed, you can use the tool from the command line. The following option
 
 ```--size```: Specify the length of the password to be generated. The default value is 12.
 
-```--omit-symbols```: Generate a password without including any special characters. The default value is false.
+```--no-special```: Generate a password without including any special characters. The default value is false.
 
 ```--pin-code```: Generate a numeric pin code instead of a full password. The default value is false.
+
+```--to-clipboard```: Copy the generated password to the clipboard.
 
 ## Example
 
 Generate a 16-character password with symbols:
 ```bash
-password-generator --size 16
+passwo --size 16
 ```
 
 Generate a 12-character password without symbols:
 ```bash
-password-generator --omit-symbols
+passwo --no-special
 ```
 
 Generate a 6-digit pin code:
 ```bash
-password-generator --size 6 --pin-code
+passwo --size 6 --pin-code
 ```
