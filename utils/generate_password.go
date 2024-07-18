@@ -12,15 +12,12 @@ func GeneratePassword(size int, criteria string) string {
 	specialCharacters := "!@#$%^&*()_+-=[]{}|;:'\",.<>?/`~"
 	pinCode := "1234567890"
 
-	if criteria == "defaultCriteria" {
+	switch criteria {
+	case "defaultCriteria":
 		criteria = alphabetLower + alphabetUpper + specialCharacters + pinCode
-	}
-
-	if criteria == "noSpecial" {
+	case "noSpecial":
 		criteria = alphabetLower + alphabetUpper + pinCode
-	}
-
-	if criteria == "pinCode" {
+	case "pinCode":
 		criteria = pinCode
 	}
 
